@@ -31,11 +31,19 @@ let autoTodo = new function() {
         location.hash = '/active';
     };
 
-    this.createTodo = function() {
-        document.querySelector('body > section > header > input').value = 'name';
-        document
-            .querySelector('body > section > header > input')
-            .dispatchEvent(new Event('change', { bubbles: true }));
+    this.createTodo = function(text) {
+        var input = document.querySelector('body > section > header > input');
+        var todoText = text || 'name';
+        input.value = todoText;
+
+        // simulate pressing Enter instead of 'change'
+        var ev = new KeyboardEvent('keydown', {
+            key: 'Enter',
+            keyCode: 13,
+            which: 13,
+            bubbles: true
+        });
+        input.dispatchEvent(ev);
     };
 
     this.amendTodo = function(x) {
